@@ -13,7 +13,7 @@ public class ResultViewModel(bool isSuccess = true, string message = "")
        => new(false, message);
 
     public static ResultViewModel WithValidationErrors(IEnumerable<string> errors)
-        => new(false, "A validação falhou!") { Errors = [.. errors] };
+        => new(false, "A validação falhou.") { Errors = [.. errors] };
 }
 
 public class ResultViewModel<T>(
@@ -27,6 +27,6 @@ public class ResultViewModel<T>(
     public static ResultViewModel<T> Success(T data)
         => new(data);
 
-    public static ResultViewModel<T> Error(string message)
-        => new(default, false, message);
+    public static ResultViewModel<T> Error(T? data, string message)
+        => new(data, false, message);
 }

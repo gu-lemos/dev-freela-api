@@ -13,7 +13,7 @@ public class Handler(IProjectRepository repository) : IRequestHandler<GetByIdQue
         var project = await _repository.GetDetailsById(request.Id, cancellationToken);
 
         if (project is null)
-            return ResultViewModel<ProjectViewModel>.Error("Projeto não existe.");
+            return ResultViewModel<ProjectViewModel>.Error(null, $"O projeto {request.Id} não existe.");
 
         var model = ProjectViewModel.FromEntity(project);
 

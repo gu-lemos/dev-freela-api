@@ -35,7 +35,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
         var result = await _mediator.Send(query);
 
         if (!result.IsSuccess)
-            return BadRequest(result.Message);
+            return NotFound(result);
 
         return Ok(result);
     }
@@ -58,7 +58,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
         var result = await _mediator.Send(command);
 
         if (!result.IsSuccess)
-            return BadRequest(result.Message);
+            return NotFound(result);
 
         return NoContent();
     }       
@@ -69,7 +69,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
         var result = await _mediator.Send(new DeleteProjectCommand(id));
 
         if (!result.IsSuccess)
-            return BadRequest(result.Message);
+            return NotFound(result);
 
         return NoContent();
     }
@@ -80,7 +80,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
         var result = await _mediator.Send(new StartProjectCommand(id));
 
         if (!result.IsSuccess)
-            return BadRequest(result.Message);
+            return NotFound(result);
 
         return NoContent();
     }
@@ -91,7 +91,7 @@ public class ProjectsController(IMediator mediator) : ControllerBase
         var result = await _mediator.Send(new CompleteProjectCommand(id));
 
         if (!result.IsSuccess)
-            return BadRequest(result.Message);
+            return NotFound(result);
 
         return NoContent();
     }
@@ -99,11 +99,11 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     [HttpPost("{id}/comments")]
     public async Task<IActionResult> PostComment(int id, InsertCommentProjectCommand command)
     {
-        command.ProjectId = id;
+        command.IdProject = id;
         var result = await _mediator.Send(command);
 
         if (!result.IsSuccess)
-            return BadRequest(result.Message);
+            return NotFound(result);
 
         return Ok();
     }

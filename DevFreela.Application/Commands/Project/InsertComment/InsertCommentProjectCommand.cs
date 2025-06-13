@@ -7,7 +7,7 @@ namespace DevFreela.Application.Commands.Project.InsertComment;
 public class InsertCommentProjectCommand : IRequest<ResultViewModel>
 {
     [JsonIgnore]
-    public int ProjectId { get; set; }
+    public int IdProject { get; set; }
     public string Content { get; set; } = string.Empty;
     public int IdUser { get; set; }
 }

@@ -11,12 +11,12 @@ internal class InsertCommentProjectHandler(IProjectRepository repository) : IReq
 
     public async Task<ResultViewModel> Handle(InsertCommentProjectCommand request, CancellationToken cancellationToken)
     {
-        var projectExists = await _repository.Exists(request.ProjectId, cancellationToken);
+        var projectExists = await _repository.Exists(request.IdProject, cancellationToken);
 
         if (!projectExists)
-            return ResultViewModel.Error($"O projeto {request.ProjectId} não existe.");
+            return ResultViewModel.Error($"O projeto {request.IdProject} não existe.");
 
-        var comment = new ProjectComment(request.Content, request.ProjectId, request.IdUser);
+        var comment = new ProjectComment(request.Content, request.IdProject, request.IdUser);
 
         await _repository.AddComment(comment, cancellationToken);
 
