@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.0.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
+    <PackageReference Include="MediatR" Version="12.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DevFreela.Core\DevFreela.Core.csproj" />
+    <ProjectReference Include="..\DevFreela.Infrastructure\DevFreela.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\Project\Complete\Validator\" />
+    <Folder Include="Commands\Project\Delete\Validator\" />
+    <Folder Include="Commands\Project\InsertComment\Validator\" />
+    <Folder Include="Commands\Project\Start\Validator\" />
+    <Folder Include="Commands\Project\Update\Validator\" />
+    <Folder Include="Commands\User\" />
+    <Folder Include="Commands\Skill\" />
+    <Folder Include="Queries\User\" />
+    <Folder Include="Queries\Skill\" />
+  </ItemGroup>
+
+</Project>
