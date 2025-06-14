@@ -1,14 +1,7 @@
-﻿using DevFreela.Core.Entities;
+﻿namespace DevFreela.Core.Entities;
 
-namespace DevFreela.Core.Entities;
-
-public class Skill : BaseEntity
+public class Skill(string description) : BaseEntity()
 {
-    public Skill(string description) : base()
-    {
-        Description = description;
-    }
-
-    public string Description { get; private set; }
-    public List<UserSkill> UserSkills { get; private set; }
+    public string Description { get; private set; } = description;
+    public List<UserSkill>? UserSkills { get; private set; }
 }

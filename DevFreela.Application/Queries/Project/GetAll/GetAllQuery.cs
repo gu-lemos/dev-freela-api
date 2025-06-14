@@ -3,4 +3,4 @@ using MediatR;
 
 namespace DevFreela.Application.Queries.Project.GetAll;
 
-public class GetAllQuery : IRequest<ResultViewModel<List<ProjectItemViewModel>>> { }
+public class GetAllQuery : IRequest<ResultViewModel<List<ProjectViewModel>>> { }

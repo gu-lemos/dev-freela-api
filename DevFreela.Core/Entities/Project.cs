@@ -1,33 +1,20 @@
-﻿using DevFreela.Core.Entities;
-using DevFreela.Core.Enums;
+﻿using DevFreela.Core.Enums;
 
 namespace DevFreela.Core.Entities;
 
-public class Project : BaseEntity
+public class Project(string title, string description, int idClient, int idFreeLancer, decimal totalCost) : BaseEntity()
 {
-    protected Project() { }
-    public Project(string title, string description, int idClient, int idFreeLancer, decimal totalCost) : base()
-    {
-        Title = title;
-        Description = description;
-        IdClient = idClient;
-        IdFreeLancer = idFreeLancer;
-        TotalCost = totalCost;
-        Status = ProjectStatusEnum.Created;
-        Comments = [];
-    }
-
-    public string Title { get; private set; }
-    public string Description { get; private set; }
-    public int IdClient { get; private set; }
-    public User Client { get; private set; }
-    public int IdFreeLancer { get; private set; }
-    public User FreeLancer { get; private set; }
-    public decimal TotalCost { get; private set; }
+    public string Title { get; private set; } = title;
+    public string Description { get; private set; } = description;
+    public int IdClient { get; private set; } = idClient;
+    public User Client { get; private set; } = null!;
+    public int IdFreeLancer { get; private set; } = idFreeLancer;
+    public User FreeLancer { get; private set; } = null!;
+    public decimal TotalCost { get; private set; } = totalCost;
     public DateTime? StartedAt { get; private set; }
     public DateTime? CompletedAt { get; private set; }
-    public ProjectStatusEnum Status { get; private set; }
-    public List<ProjectComment> Comments { get; private set; }
+    public ProjectStatusEnum Status { get; private set; } = ProjectStatusEnum.Created;
+    public List<ProjectComment> Comments { get; private set; } = [];
 
     public void Cancel()
     {
@@ -50,12 +37,12 @@ public class Project : BaseEntity
     {
         if (Status == ProjectStatusEnum.PaymentPending || Status == ProjectStatusEnum.InProgress)
         {
-            Status = ProjectStatusEnum.InProgress;
+            Status = ProjectStatusEnum.Completed;
             CompletedAt = DateTime.Now;
         }
     }
 
-    public void SetPaymentPeding()
+    public void SetPaymentPending()
     {
         if (Status == ProjectStatusEnum.InProgress)
         {

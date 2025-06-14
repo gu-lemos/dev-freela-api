@@ -1,22 +1,24 @@
-﻿using DevFreela.Application.Models;
+﻿using AutoMapper;
+using DevFreela.Application.Models;
 using DevFreela.Core.Repositories;
 using MediatR;
 
 namespace DevFreela.Application.Queries.Project.GetById;
 
-public class Handler(IProjectRepository repository) : IRequestHandler<GetByIdQuery, ResultViewModel<ProjectViewModel>>
+public class Handler(IProjectRepository repository, IMapper mapper) : IRequestHandler<GetByIdQuery, ResultViewModel<ProjectDetailsViewModel>>
 {
     readonly private IProjectRepository _repository = repository;
+    readonly private IMapper _mapper = mapper;
 
-    public async Task<ResultViewModel<ProjectViewModel>> Handle(GetByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<ProjectDetailsViewModel>> Handle(GetByIdQuery request, CancellationToken cancellationToken)
     {
         var project = await _repository.GetDetailsById(request.Id, cancellationToken);
 
         if (project is null)
-            return ResultViewModel<ProjectViewModel>.Error(null, $"O projeto {request.Id} não existe.");
+            return ResultViewModel<ProjectDetailsViewModel>.Error(null, $"O projeto {request.Id} não existe.");
 
-        var model = ProjectViewModel.FromEntity(project);
+        var model = _mapper.Map<ProjectDetailsViewModel>(project);
 
-        return ResultViewModel<ProjectViewModel>.Success(model);
+        return ResultViewModel<ProjectDetailsViewModel>.Success(model);
     }
 }

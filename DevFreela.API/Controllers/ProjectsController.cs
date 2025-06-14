@@ -18,21 +18,21 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     private readonly IMediator _mediator = mediator;
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var query = new GetAllQuery();
 
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(query, cancellationToken);
 
         return Ok(result);
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int id)
+    public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
     {
         var query = new GetByIdQuery(id);
 
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(query, cancellationToken);
 
         if (!result.IsSuccess)
             return NotFound(result);
@@ -41,9 +41,9 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(CreateProjectCommand command)
+    public async Task<IActionResult> Post(CreateProjectCommand command, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(command, cancellationToken);
 
         if (!result.IsSuccess)
             return BadRequest(result.Message);
@@ -52,10 +52,10 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, UpdateProjectCommand command)
+    public async Task<IActionResult> Put(int id, UpdateProjectCommand command, CancellationToken cancellationToken)
     {
         command.Id = id;
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(command, cancellationToken);
 
         if (!result.IsSuccess)
             return NotFound(result);
@@ -64,9 +64,9 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     }       
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id) 
+    public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken) 
     {
-        var result = await _mediator.Send(new DeleteProjectCommand(id));
+        var result = await _mediator.Send(new DeleteProjectCommand(id), cancellationToken);
 
         if (!result.IsSuccess)
             return NotFound(result);
@@ -75,9 +75,9 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPut("{id}/start")]
-    public async Task<IActionResult> Start(int id)
+    public async Task<IActionResult> Start(int id, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new StartProjectCommand(id));
+        var result = await _mediator.Send(new StartProjectCommand(id), cancellationToken);
 
         if (!result.IsSuccess)
             return NotFound(result);
@@ -86,9 +86,9 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPut("{id}/complete")]
-    public async Task<IActionResult> Complete(int id)
+    public async Task<IActionResult> Complete(int id, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new CompleteProjectCommand(id));
+        var result = await _mediator.Send(new CompleteProjectCommand(id), cancellationToken);
 
         if (!result.IsSuccess)
             return NotFound(result);
@@ -97,10 +97,10 @@ public class ProjectsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost("{id}/comments")]
-    public async Task<IActionResult> PostComment(int id, InsertCommentProjectCommand command)
+    public async Task<IActionResult> PostComment(int id, InsertCommentProjectCommand command, CancellationToken cancellationToken)
     {
         command.IdProject = id;
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(command, cancellationToken);
 
         if (!result.IsSuccess)
             return NotFound(result);

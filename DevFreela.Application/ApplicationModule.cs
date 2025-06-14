@@ -15,7 +15,8 @@ public static class ApplicationModule
         service
             .AddHandlers()
             .AddBehaviors()
-            .AddValidators();
+            .AddValidators()
+            .AddAutoMapper();
 
         return service;
     }
@@ -37,6 +38,14 @@ public static class ApplicationModule
     private static IServiceCollection AddValidators(this IServiceCollection services)
     {
         services.AddValidatorsFromAssembly(Assembly.Load(projectName));
+        return services;
+    }
+
+    private static IServiceCollection AddAutoMapper(this IServiceCollection services)
+    {
+        services.AddAutoMapper(config
+            => config.AddMaps(Assembly.Load(projectName)));
+
         return services;
     }
 }
